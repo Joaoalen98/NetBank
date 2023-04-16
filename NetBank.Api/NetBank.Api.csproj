@@ -23,10 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\NetBank.Domain\NetBank.Domain.csproj" />
     <ProjectReference Include="..\NetBank.Infra\NetBank.Infra.csproj" />
   </ItemGroup>

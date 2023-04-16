@@ -15,5 +15,7 @@
         public string Senha { get; set; }
 
         public IEnumerable<Conta> Conta { get; set; }
+
+        public bool Ativo { get; set; }
     }
 }

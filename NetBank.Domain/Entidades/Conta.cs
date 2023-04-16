@@ -14,6 +14,8 @@ namespace NetBank.Domain.Entidades
 
         public virtual Usuario Usuario { get; set; }
 
-        public virtual IEnumerable<Transacao> Transacoes { get; set; }
+        public virtual IEnumerable<Transacao> TransacoesRecebidas { get; set; }
+
+        public virtual IEnumerable<Transacao> TransacoesEnviadas { get; set; }
     }
 }

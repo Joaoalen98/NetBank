@@ -120,7 +120,7 @@ namespace NetBank.Infra.Migrations
             modelBuilder.Entity("NetBank.Domain.Entidades.Conta", b =>
                 {
                     b.HasOne("NetBank.Domain.Entidades.Usuario", "Usuario")
-                        .WithMany("Conta")
+                        .WithMany("Contas")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -156,7 +156,7 @@ namespace NetBank.Infra.Migrations
 
             modelBuilder.Entity("NetBank.Domain.Entidades.Usuario", b =>
                 {
-                    b.Navigation("Conta");
+                    b.Navigation("Contas");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,8 @@
-﻿namespace NetBank.Domain.Entidades
+﻿using NetBank.Domain.Entidades;
+
+namespace NetBank.Api.Models
 {
-    public class Usuario : BaseEntidade
+    public class UsuarioViewModel
     {
         public string NomeCompleto { get; set; }
 
@@ -13,9 +15,5 @@
         public DateTime DataNascimento { get; set; }
 
         public string Senha { get; set; }
-
-        public IEnumerable<Conta> Contas { get; set; }
-
-        public bool Ativo { get; set; }
     }
 }

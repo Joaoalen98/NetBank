@@ -17,6 +17,7 @@ namespace NetBank.Api.Models
 
 
         [Required(ErrorMessage = "O CPF deve ser informado")]
+        [RegularExpression("\\d{11}", ErrorMessage = "Informe um CPF válido, com 11 caracteres sem pontos e outros sinais")]
         public string CPF { get; set; }
 
 

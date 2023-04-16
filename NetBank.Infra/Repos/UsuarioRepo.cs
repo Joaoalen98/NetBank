@@ -2,6 +2,7 @@
 using NetBank.Domain.Entidades;
 using NetBank.Domain.Interfaces;
 using NetBank.Infra.Data;
+using NetBank.Infra.Services;
 
 namespace NetBank.Infra.Repos
 {
@@ -36,9 +37,23 @@ namespace NetBank.Infra.Repos
 
 
 
-        public Task<Usuario> ObterPorCpfSenha(string cpf, string senha)
+        public async Task<Usuario> ObterPorCpfSenha(string cpf, string senha)
         {
-            throw new NotImplementedException();
+            var usuario = await Set.FirstOrDefaultAsync(x => x.Cpf == cpf);
+
+            if (usuario == null)
+            {
+                throw new ApplicationException("CPF ou senha incorreta");
+            }
+
+            var correta = HashService.ComparaSenha(senha, usuario.Cpf);
+
+            if (!correta)
+            {
+                throw new ApplicationException("CPF ou senha incorreta");
+            }
+
+            return usuario;
         }
 
 

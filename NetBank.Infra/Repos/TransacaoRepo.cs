@@ -16,7 +16,7 @@ namespace NetBank.Infra.Repos
             await Set.AddAsync(entidade);
             await Context.SaveChangesAsync();
         }
-        
+
 
 
         public async Task Editar(Transacao entidade)
@@ -28,13 +28,13 @@ namespace NetBank.Infra.Repos
 
 
         public async Task<IEnumerable<Transacao>> ObterPorFiltros(
-            string usuarioId, DateTime? dataInicial, DateTime? dataFinal, string? descricao, decimal? valor)
+            string contaId, DateTime? dataInicial, DateTime? dataFinal, string? descricao, decimal? valor)
         {
             var query = Set
                 .Include(x => x.ContaRecebeu)
                 .Include(x => x.ContaEnviou)
-                .Where(x => x.ContaRecebeu.UsuarioId == usuarioId
-                || x.ContaEnviou.UsuarioId == usuarioId);
+                .Where(x => x.ContaRecebeuId == contaId
+                || x.ContaEnviouId == contaId);
 
             if (dataInicial != null)
             {

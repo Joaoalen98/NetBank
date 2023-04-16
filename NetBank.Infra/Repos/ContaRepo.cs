@@ -62,7 +62,7 @@ namespace NetBank.Infra.Repos
 
             if (transacoesEnviadas)
             {
-                query = query.Include(x => x.TransacoesRecebidas);
+                query = query.Include(x => x.TransacoesEnviadas);
             }
 
             return await query.FirstOrDefaultAsync();

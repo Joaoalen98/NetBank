@@ -8,7 +8,7 @@
 
         public string Telefone { get; set; }
 
-        public string Cpf { get; set; }
+        public string CPF { get; set; }
 
         public DateTime DataNascimento { get; set; }
 

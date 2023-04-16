@@ -12,6 +12,7 @@ builder.Services.AddDbContext<AppDbContext>(x =>
 });
 
 builder.Services.AddScoped<IUsuarioRepo, UsuarioRepo>();
+builder.Services.AddScoped<IContaRepo, ContaRepo>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

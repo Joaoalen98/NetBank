@@ -17,7 +17,7 @@ namespace NetBank.Infra.Services
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Expires = DateTime.Now.AddMinutes(10),
+                Expires = DateTime.Now.AddHours(4),
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new(ClaimTypes.Email, usuario.Email),

@@ -13,6 +13,11 @@ namespace NetBank.Infra.Repos
 
         public async Task Criar(Conta entidade)
         {
+            if (await Set.FirstOrDefaultAsync(x => x.Numero == entidade.Numero) != null)
+            {
+                throw new ApplicationException("Conta ja registrada com este número");
+            }
+
             await Set.AddRangeAsync(entidade);
             await Context.SaveChangesAsync();
         }

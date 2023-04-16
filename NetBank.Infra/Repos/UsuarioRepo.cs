@@ -19,9 +19,14 @@ namespace NetBank.Infra.Repos
                 throw new ApplicationException("Usuario ja cadastrado com o email informado");
             }
 
-            if (await Set.FirstOrDefaultAsync(x => x.Cpf == entidade.Cpf) != null)
+            if (await Set.FirstOrDefaultAsync(x => x.CPF == entidade.CPF) != null)
             {
                 throw new ApplicationException("Usuario ja cadastrado com o CPF informado");
+            }
+
+            if (entidade.DataNascimento == DateTime.MinValue)
+            {
+                throw new ApplicationException("Informe uma data de nascimento valida");
             }
 
             await Set.AddAsync(entidade);
@@ -39,14 +44,14 @@ namespace NetBank.Infra.Repos
 
         public async Task<Usuario> ObterPorCpfSenha(string cpf, string senha)
         {
-            var usuario = await Set.FirstOrDefaultAsync(x => x.Cpf == cpf);
+            var usuario = await Set.FirstOrDefaultAsync(x => x.CPF == cpf);
 
             if (usuario == null)
             {
                 throw new ApplicationException("CPF ou senha incorreta");
             }
 
-            var correta = HashService.ComparaSenha(senha, usuario.Cpf);
+            var correta = HashService.ComparaSenha(senha, usuario.Senha);
 
             if (!correta)
             {

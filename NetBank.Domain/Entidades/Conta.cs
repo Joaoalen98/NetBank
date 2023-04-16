@@ -1,4 +1,5 @@
 ﻿using NetBank.Domain.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NetBank.Domain.Entidades
 {
@@ -17,5 +18,24 @@ namespace NetBank.Domain.Entidades
         public virtual IEnumerable<Transacao> TransacoesRecebidas { get; set; }
 
         public virtual IEnumerable<Transacao> TransacoesEnviadas { get; set; }
+
+
+        [NotMapped]
+        public decimal ValorEmConta { get => ObterValorEmConta(); }
+
+
+
+        public Conta()
+        {
+            TransacoesEnviadas = new List<Transacao>();
+            TransacoesRecebidas = new List<Transacao>();
+        }
+
+
+        private decimal ObterValorEmConta()
+        {
+            var valor = TransacoesRecebidas.Sum(x => x.Valor) + TransacoesEnviadas.Sum(x => x.Valor);
+            return valor;
+        }
     }
 }

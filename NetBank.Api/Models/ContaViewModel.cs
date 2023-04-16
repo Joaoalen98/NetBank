@@ -4,6 +4,8 @@ namespace NetBank.Api.Models
 {
     public class ContaViewModel
     {
+        public string Id { get; set; }
+
         public string Agencia { get; set; }
 
         public string Numero { get; set; }
@@ -22,6 +24,7 @@ namespace NetBank.Api.Models
 
         public ContaViewModel(Conta conta)
         {
+            Id = conta.Id;
             Agencia = conta.Agencia;
             Numero = conta.Numero;
             Tipo = conta.Tipo.ToString();

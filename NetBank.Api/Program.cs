@@ -5,6 +5,7 @@ using NetBank.Domain.Interfaces;
 using NetBank.Infra.Data;
 using NetBank.Infra.Repos;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,8 +32,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddScoped<IUsuarioRepo, UsuarioRepo>();
 builder.Services.AddScoped<IContaRepo, ContaRepo>();
+builder.Services.AddScoped<ITransacaoRepo, TransacaoRepo>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(x =>
+    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

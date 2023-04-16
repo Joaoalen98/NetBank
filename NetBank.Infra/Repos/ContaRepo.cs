@@ -7,8 +7,11 @@ namespace NetBank.Infra.Repos
 {
     public class ContaRepo : BaseRepo<Conta>, IContaRepo
     {
-        public ContaRepo(AppDbContext context) : base(context)
+        private ITransacaoRepo _transacaoRepo;
+
+        public ContaRepo(AppDbContext context, ITransacaoRepo transacaoRepo) : base(context)
         {
+            _transacaoRepo = transacaoRepo;
         }
 
         public async Task Criar(Conta entidade)
@@ -31,6 +34,39 @@ namespace NetBank.Infra.Repos
 
 
 
+        public async Task EnviarTransacao(
+            string idContaEnviou, string agenciaContaReceber, string numeroContaReceber, decimal valor)
+        {
+            var contaEnviou = await ObterPorId(idContaEnviou, true, true);
+
+            if (valor > contaEnviou.ValorEmConta)
+            {
+                throw new ApplicationException("O valor a ser enviado é maior do que o valor disponível");
+            }
+
+            var contaReceber = await ObterPorAgenciaNumero(agenciaContaReceber, numeroContaReceber, false, false);
+
+            if (contaReceber.Id == idContaEnviou)
+            {
+                throw new ApplicationException("Não é possivel tranferir para a mesma conta");
+            }
+
+            var transacao = new Transacao
+            {
+                ContaEnviouId = contaEnviou.Id,
+                ContaRecebeuId = contaReceber.Id,
+                Valor = valor,
+                DataOperacao = DateTime.Now,
+                Id = Guid.NewGuid().ToString(),
+            };
+
+            transacao.Descricao = $"Transação de {valor:c} - {transacao.DataOperacao:dd/MM/yyyy}";
+
+            await _transacaoRepo.Criar(transacao);
+        }
+
+
+
         public async Task<IEnumerable<Conta>> ObterContasUsuario(string usuarioId, bool transacoesRecebidas, bool transacoesEnviadas)
         {
             var query = Set
@@ -47,6 +83,33 @@ namespace NetBank.Infra.Repos
             }
 
             return await query.ToListAsync();
+        }
+
+
+
+        public async Task<Conta> ObterPorAgenciaNumero(
+            string agencia, string numero, bool transacoesRecebidas, bool transacoesEnviadas)
+        {
+            var conta = Set.Where(
+                x => x.Agencia == agencia
+                && x.Numero == numero);
+
+            if (!conta.Any())
+            {
+                throw new ApplicationException("Conta não encontrada");
+            }
+
+            if (transacoesRecebidas)
+            {
+                conta = conta.Include(x => x.TransacoesRecebidas);
+            }
+
+            if (transacoesEnviadas)
+            {
+                conta = conta.Include(x => x.TransacoesEnviadas);
+            }
+
+            return await conta.FirstOrDefaultAsync();
         }
 
 

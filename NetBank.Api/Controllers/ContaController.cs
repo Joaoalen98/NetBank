@@ -40,5 +40,32 @@ namespace NetBank.Api.Controllers
                 return BadRequest(erro);
             }
         }
+
+
+
+        [HttpPost]
+        [Route("{id}/nova-transacao")]
+        public async Task<IActionResult> NovaTransacao(
+            [FromRoute] string id,
+            [FromBody] TransacaoViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _contaRepo.EnviarTransacao(id, model.Agencia, model.Numero, model.Valor);
+                    return StatusCode(201);
+                }
+                catch (Exception ex)
+                {
+                    var erro = new ErrorModel(400);
+                    erro.Status = 400;
+                    erro.Errors.Add("Outro", new string[] { ex.Message });
+                    return BadRequest(erro);
+                }
+            }
+
+            return BadRequest();
+        }
     }
 }

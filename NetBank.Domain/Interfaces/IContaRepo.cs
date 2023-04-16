@@ -7,5 +7,9 @@ namespace NetBank.Domain.Interfaces
         Task<IEnumerable<Conta>> ObterContasUsuario(string usuarioId, bool transacoesRecebidas, bool transacoesEnviadas);
 
         Task<Conta> ObterPorId(string id, bool transacoesRecebidas, bool transacoesEnviadas);
+
+        Task EnviarTransacao(string idContaEnviou, string agenciaContaReceber, string numeroContaReceber, decimal valor);
+
+        Task<Conta> ObterPorAgenciaNumero(string agencia, string numero, bool transacoesRecebidas, bool transacoesEnviadas);
     }
 }

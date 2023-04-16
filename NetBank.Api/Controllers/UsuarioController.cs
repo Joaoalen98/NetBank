@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NetBank.Api.Models;
 using NetBank.Domain.Entidades;
@@ -113,6 +114,33 @@ namespace NetBank.Api.Controllers
             }
 
             return BadRequest();
+        }
+
+
+
+
+        [Authorize]
+        [HttpGet]
+        [Route("token-valido")]
+        [ProducesResponseType(typeof(Usuario), 200)]
+        [ProducesResponseType(typeof(ErrorModel), 400)]
+        [ProducesResponseType(401)]
+        public async Task<IActionResult> VerificaTokenValido()
+        {
+            try
+            {
+                var id = User.FindFirst("Id")!.Value;
+                    var usuario = await _usuarioRepo.ObterPorId(id);
+                usuario.Senha = "";
+
+                return StatusCode(200, usuario);
+            }
+            catch (Exception ex)
+            {
+                var erro = new ErrorModel(400);
+                erro.Errors.Add("Outro", new string[] { ex.Message });
+                return BadRequest(erro);
+            }
         }
     }
 }

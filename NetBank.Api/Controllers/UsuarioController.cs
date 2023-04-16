@@ -24,14 +24,23 @@ namespace NetBank.Api.Controllers
         }
 
 
-        private async Task CriarContaUsuario(Usuario usuario, TipoContaEnum tipoConta)
+        private async Task<Conta> CriarContaUsuario(Usuario usuario, TipoContaEnum tipoConta, string? numeroContaCorrente)
         {
+            Conta conta;
             while (true)
             {
                 try
                 {
-                    var numeroConta = ContaService.GerarNumeroConta();
-                    var conta = ContaService.GerarConta(usuario, tipoConta, numeroConta);
+                    string numeroConta;
+                    if (tipoConta == TipoContaEnum.ContaPoupanca)
+                    {
+                        numeroConta = numeroContaCorrente!.Split('-')[0] + "-2";
+                    }
+                    else
+                    {
+                        numeroConta = ContaService.GerarNumeroConta() + "-1";
+                    }
+                    conta = ContaService.GerarConta(usuario, tipoConta, numeroConta);
 
                     await _contaRepo.Criar(conta);
 
@@ -42,6 +51,7 @@ namespace NetBank.Api.Controllers
 
                 }
             }
+            return conta;
         }
 
 
@@ -70,8 +80,8 @@ namespace NetBank.Api.Controllers
                 {
                     await _usuarioRepo.Criar(usuario);
 
-                    await CriarContaUsuario(usuario, TipoContaEnum.ContaCorrente);
-                    await CriarContaUsuario(usuario, TipoContaEnum.ContaPoupanca);
+                    var contaCorrente = await CriarContaUsuario(usuario, TipoContaEnum.ContaCorrente, null);
+                    await CriarContaUsuario(usuario, TipoContaEnum.ContaPoupanca, contaCorrente.Numero);
 
                     return StatusCode(201);
                 }

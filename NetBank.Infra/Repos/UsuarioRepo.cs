@@ -1,4 +1,5 @@
-﻿using NetBank.Domain.Entidades;
+﻿using Microsoft.EntityFrameworkCore;
+using NetBank.Domain.Entidades;
 using NetBank.Domain.Interfaces;
 using NetBank.Infra.Data;
 
@@ -10,29 +11,48 @@ namespace NetBank.Infra.Repos
         {
         }
 
-        public Task Criar(Usuario entidade)
+        public async Task Criar(Usuario entidade)
         {
-            throw new NotImplementedException();
+            if (await Set.FirstOrDefaultAsync(x => x.Email == entidade.Email) != null)
+            {
+                throw new ApplicationException("Usuario ja cadastrado com o email informado");
+            }
+
+            if (await Set.FirstOrDefaultAsync(x => x.Cpf == entidade.Cpf) != null)
+            {
+                throw new ApplicationException("Usuario ja cadastrado com o CPF informado");
+            }
+
+            await Set.AddAsync(entidade);
+            await Context.SaveChangesAsync();
         }
 
-        public Task Deletar(string id)
+
+        public async Task Editar(Usuario entidade)
         {
-            throw new NotImplementedException();
+            Set.Update(entidade);
+            await Context.SaveChangesAsync();
         }
 
-        public Task Editar(Usuario entidade)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public Task<Usuario> ObterPorCpfSenha(string cpf, string senha)
         {
             throw new NotImplementedException();
         }
 
+
+
         public Task<Usuario> ObterPorId(string id)
         {
-            throw new NotImplementedException();
+            var usuario =  Set.FirstOrDefaultAsync(x => x.Id == id)!;
+
+            if (usuario == null)
+            {
+                throw new ApplicationException("Usuario não encontrado");
+            }
+
+            return usuario;
         }
     }
 }

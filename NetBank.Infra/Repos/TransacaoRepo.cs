@@ -1,4 +1,5 @@
-﻿using NetBank.Domain.Entidades;
+﻿using Microsoft.EntityFrameworkCore;
+using NetBank.Domain.Entidades;
 using NetBank.Domain.Interfaces;
 using NetBank.Infra.Data;
 
@@ -10,29 +11,76 @@ namespace NetBank.Infra.Repos
         {
         }
 
-        public Task Criar(Transacao entidade)
+        public async Task Criar(Transacao entidade)
         {
-            throw new NotImplementedException();
+            await Set.AddAsync(entidade);
+            await Context.SaveChangesAsync();
+        }
+        
+
+
+        public async Task Editar(Transacao entidade)
+        {
+            Set.Update(entidade);
+            await Context.SaveChangesAsync();
         }
 
-        public Task Deletar(string id)
+
+
+        public async Task<IEnumerable<Transacao>> ObterPorFiltros(
+            string usuarioId, DateTime? dataInicial, DateTime? dataFinal, string? descricao, decimal? valor)
         {
-            throw new NotImplementedException();
+            var query = Set
+                .Include(x => x.ContaRecebeu)
+                .Include(x => x.ContaEnviou)
+                .Where(x => x.ContaRecebeu.UsuarioId == usuarioId
+                || x.ContaEnviou.UsuarioId == usuarioId);
+
+            if (dataInicial != null)
+            {
+                query = query.Where(x => x.DataOperacao >= dataInicial);
+            }
+
+            if (dataFinal != null)
+            {
+                query = query.Where(x => x.DataOperacao <= dataFinal);
+            }
+
+            if (!string.IsNullOrEmpty(descricao))
+            {
+                query = query.Where(x => x.Descricao.ToUpper().Contains(descricao.ToUpper()));
+            }
+
+            if (valor != null)
+            {
+                query = query.Where(x => (int)x.Valor == (int)valor);
+            }
+
+            return await query.ToListAsync();
         }
 
-        public Task Editar(Transacao entidade)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<IEnumerable<Transacao>> ObterPorFiltros(DateTime? dataInicial, DateTime? dataFinal, string? descricao, decimal? valor)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<Transacao> ObterPorId(string id)
+        public async Task<Transacao> ObterPorId(string id, bool contaEnviou, bool contaRecebeu)
         {
-            throw new NotImplementedException();
+            var query = Set.Where(x => x.Id == id)!;
+
+            if (!query.Any())
+            {
+                throw new ApplicationException("Transação não encontrada");
+            }
+
+            if (contaEnviou)
+            {
+                query = query.Include(x => x.ContaEnviou);
+            }
+
+            if (contaRecebeu)
+            {
+                query = query.Include(x => x.ContaRecebeu);
+            }
+
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

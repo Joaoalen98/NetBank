@@ -1,4 +1,5 @@
-﻿using NetBank.Domain.Entidades;
+﻿using Microsoft.EntityFrameworkCore;
+using NetBank.Domain.Entidades;
 using NetBank.Domain.Interfaces;
 using NetBank.Infra.Data;
 
@@ -10,29 +11,61 @@ namespace NetBank.Infra.Repos
         {
         }
 
-        public Task Criar(Conta entidade)
+        public async Task Criar(Conta entidade)
         {
-            throw new NotImplementedException();
+            await Set.AddRangeAsync(entidade);
+            await Context.SaveChangesAsync();
         }
 
-        public Task Deletar(string id)
+
+        public async Task Editar(Conta entidade)
         {
-            throw new NotImplementedException();
+            Set.Update(entidade);
+            await Context.SaveChangesAsync();
         }
 
-        public Task Editar(Conta entidade)
+
+
+        public async Task<IEnumerable<Conta>> ObterContasUsuario(string usuarioId, bool transacoesRecebidas, bool transacoesEnviadas)
         {
-            throw new NotImplementedException();
+            var query = Set
+                .Where(x => x.UsuarioId == usuarioId);
+
+            if (transacoesRecebidas)
+            {
+                query = query.Include(x => x.TransacoesRecebidas);
+            }
+
+            if (transacoesEnviadas)
+            {
+                query = query.Include(x => x.TransacoesRecebidas);
+            }
+
+            return await query.ToListAsync();
         }
 
-        public Task<IEnumerable<Conta>> ObterContasUsuario(string usuarioId, bool transacoes)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<Conta> ObterPorId(string id)
+
+        public async Task<Conta> ObterPorId(string id, bool transacoesRecebidas, bool transacoesEnviadas)
         {
-            throw new NotImplementedException();
+            var query = Set.Where(x => x.Id == id);
+
+            if (!query.Any())
+            {
+                throw new ApplicationException("Conta não encontrada");
+            }
+
+            if (transacoesRecebidas)
+            {
+                query = query.Include(x => x.TransacoesRecebidas);
+            }
+
+            if (transacoesEnviadas)
+            {
+                query = query.Include(x => x.TransacoesRecebidas);
+            }
+
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

@@ -6,10 +6,6 @@ namespace NetBank.Domain.Interfaces
     {
         Task Criar(T entidade);
 
-        Task<T> ObterPorId(string id);
-
         Task Editar(T entidade);
-
-        Task Deletar(string id);
     }
 }

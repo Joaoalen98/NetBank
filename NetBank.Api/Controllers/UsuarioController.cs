@@ -129,6 +129,8 @@ namespace NetBank.Api.Controllers
         [Authorize]
         [HttpGet]
         [Route("token-valido")]
+        [ProducesResponseType(typeof(Usuario), 200)]
+        [ProducesResponseType(typeof(ErroDTO), 400)]
         public async Task<IActionResult> VerificaTokenValido()
         {
             try
@@ -137,16 +139,7 @@ namespace NetBank.Api.Controllers
                 var usuario = await _usuarioRepo.ObterPorId(id);
                 usuario.Senha = "";
 
-                return StatusCode(200, new
-                {
-                    usuario.NomeCompleto,
-                    usuario.Email,
-                    usuario.Telefone,
-                    usuario.CPF,
-                    usuario.DataNascimento,
-                    usuario.Ativo,
-                    usuario.Id,
-                });
+                return StatusCode(200, usuario);
             }
             catch (Exception ex)
             {

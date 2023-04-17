@@ -22,7 +22,7 @@ namespace NetBank.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ContaDTO>), 200)]
-        [ProducesResponseType(typeof(IEnumerable<ErroDTO>), 400)]
+        [ProducesResponseType(typeof(ErroDTO), 400)]
         public async Task<IActionResult> ObterContas()
         {
             try
@@ -45,7 +45,7 @@ namespace NetBank.Api.Controllers
         [HttpPost]
         [Route("{id}/nova-transacao")]
         [ProducesResponseType(201)]
-        [ProducesResponseType(typeof(IEnumerable<ErroDTO>), 400)]
+        [ProducesResponseType(typeof(ErroDTO), 400)]
         public async Task<IActionResult> NovaTransacao(
             [FromRoute] string id,
             [FromBody] TransacaoDTO model)

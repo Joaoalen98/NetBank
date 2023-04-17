@@ -25,8 +25,17 @@ namespace NetBank.Infra.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Transacao>().HasOne(x => x.ContaEnviou).WithMany(x => x.TransacoesEnviadas).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Transacao>().HasOne(x => x.ContaRecebeu).WithMany(x => x.TransacoesRecebidas).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Transacao>()
+                .HasOne(x => x.ContaEnviou)
+                .WithMany(x => x.TransacoesEnviadas)
+                .HasForeignKey(x => x.ContaEnviouId)
+                .OnDelete(DeleteBehavior.NoAction);
+            
+            modelBuilder.Entity<Transacao>()
+                .HasOne(x => x.ContaRecebeu)
+                .WithMany(x => x.TransacoesRecebidas)
+                .HasForeignKey(x => x.ContaRecebeuId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

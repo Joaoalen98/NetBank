@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NetBank.Api.Models
+namespace NetBank.DTOs
 {
-    public class TransacaoViewModel
+    public class TransacaoDTO
     {
         [Required(ErrorMessage = "É necessário informar um valor")]
         public decimal Valor { get; set; }

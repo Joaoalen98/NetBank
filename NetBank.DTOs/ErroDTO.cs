@@ -1,12 +1,12 @@
-﻿namespace NetBank.Api.Models
+﻿namespace NetBank.DTOs
 {
-    public class ErrorModel
+    public class ErroDTO
     {
         public int Status { get; set; }
 
         public Dictionary<string, IEnumerable<string>> Errors { get; set; }
 
-        public ErrorModel(int status)
+        public ErroDTO(int status)
         {
             Errors = new Dictionary<string, IEnumerable<string>>();
             Status = status;

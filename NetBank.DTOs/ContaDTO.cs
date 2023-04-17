@@ -1,8 +1,8 @@
 ﻿using NetBank.Domain.Entidades;
 
-namespace NetBank.Api.Models
+namespace NetBank.DTOs
 {
-    public class ContaViewModel
+    public class ContaDTO
     {
         public string Id { get; set; }
 
@@ -22,7 +22,7 @@ namespace NetBank.Api.Models
 
 
 
-        public ContaViewModel(Conta conta)
+        public ContaDTO(Conta conta)
         {
             Id = conta.Id;
             Agencia = conta.Agencia;
@@ -36,12 +36,12 @@ namespace NetBank.Api.Models
 
 
 
-        public static IEnumerable<ContaViewModel> ObterContasViewModel(IEnumerable<Conta> contas)
+        public static IEnumerable<ContaDTO> ObterContasViewModel(IEnumerable<Conta> contas)
         {
-            List<ContaViewModel> contasViewModel = new();
+            List<ContaDTO> contasViewModel = new();
             foreach (var conta in contas)
             {
-                var contaViewModel = new ContaViewModel(conta);
+                var contaViewModel = new ContaDTO(conta);
                 contasViewModel.Add(contaViewModel);
             }
             return contasViewModel;

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NetBank.Api.Models
+namespace NetBank.DTOs
 {
-    public class UsuarioViewModel
+    public class UsuarioDTO
     {
         [Required(ErrorMessage = "O nome deve ser informado")]
         public string NomeCompleto { get; set; }

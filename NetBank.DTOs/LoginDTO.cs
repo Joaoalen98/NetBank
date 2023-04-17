@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NetBank.Api.Models
+namespace NetBank.DTOs
 {
-    public class LoginViewModel
+    public class LoginDTO
     {
         [Required(ErrorMessage = "O CPF deve ser informado")]
         [RegularExpression("\\d{11}", ErrorMessage = "Informe um CPF válido, com 11 caracteres sem pontos e outros sinais")]

@@ -24,7 +24,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NetBank.Domain\NetBank.Domain.csproj" />
+    <ProjectReference Include="..\NetBank.DTOs\NetBank.DTOs.csproj" />
     <ProjectReference Include="..\NetBank.Infra\NetBank.Infra.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

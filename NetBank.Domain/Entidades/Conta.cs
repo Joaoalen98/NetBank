@@ -15,9 +15,7 @@ namespace NetBank.Domain.Entidades
 
         public virtual Usuario Usuario { get; set; }
 
-        public virtual IEnumerable<Transacao> TransacoesRecebidas { get; set; }
-
-        public virtual IEnumerable<Transacao> TransacoesEnviadas { get; set; }
+        public virtual IEnumerable<Transacao> Transacoes { get; set; }
 
 
         [NotMapped]
@@ -27,14 +25,13 @@ namespace NetBank.Domain.Entidades
 
         public Conta()
         {
-            TransacoesEnviadas = new List<Transacao>();
-            TransacoesRecebidas = new List<Transacao>();
+            Transacoes = new List<Transacao>();
         }
 
 
         private decimal ObterValorEmConta()
         {
-            var valor = TransacoesRecebidas.Sum(x => x.Valor) + TransacoesEnviadas.Sum(x => x.Valor);
+            var valor = Transacoes.Sum(x => x.Valor);
             return valor;
         }
     }

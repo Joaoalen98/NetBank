@@ -9,21 +9,15 @@ namespace NetBank.Domain.Entidades
 
         public string Descricao { get; set; }
 
+        public string ContaId { get; set; }
 
-
-        public string ContaEnviouId { get; set; }
-
-        [InverseProperty("TransacoesEnviadas")]
-        public virtual Conta ContaEnviou { get; set; }
-
-
+        public virtual Conta Conta { get; set; }
 
         public string ContaRecebeuId { get; set; }
 
-        [InverseProperty("TransacoesRecebidas")]
-        public virtual Conta ContaRecebeu { get; set; }
+        public string ContaRecebeuAgencia { get; set; }
 
-
+        public string ContaRecebeuNumero { get; set; }
 
         public DateTime DataOperacao { get; set; }
     }

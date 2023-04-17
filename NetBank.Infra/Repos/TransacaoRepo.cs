@@ -19,22 +19,11 @@ namespace NetBank.Infra.Repos
 
 
 
-        public async Task Editar(Transacao entidade)
-        {
-            Set.Update(entidade);
-            await Context.SaveChangesAsync();
-        }
-
-
-
         public async Task<IEnumerable<Transacao>> ObterPorFiltros(
             string contaId, DateTime? dataInicial, DateTime? dataFinal, string? descricao, decimal? valor)
         {
             var query = Set
-                .Include(x => x.ContaRecebeu)
-                .Include(x => x.ContaEnviou)
-                .Where(x => x.ContaRecebeuId == contaId
-                || x.ContaEnviouId == contaId);
+                .Where(x => x.ContaId == contaId);
 
             if (dataInicial != null)
             {
@@ -61,23 +50,13 @@ namespace NetBank.Infra.Repos
 
 
 
-        public async Task<Transacao> ObterPorId(string id, bool contaEnviou, bool contaRecebeu)
+        public async Task<Transacao> ObterPorId(string id)
         {
             var query = Set.Where(x => x.Id == id)!;
 
             if (!query.Any())
             {
                 throw new ApplicationException("Transação não encontrada");
-            }
-
-            if (contaEnviou)
-            {
-                query = query.Include(x => x.ContaEnviou);
-            }
-
-            if (contaRecebeu)
-            {
-                query = query.Include(x => x.ContaRecebeu);
             }
 
             return await query.FirstOrDefaultAsync();

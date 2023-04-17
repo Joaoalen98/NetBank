@@ -37,49 +37,68 @@ namespace NetBank.Infra.Repos
         public async Task EnviarTransacao(
             string idContaEnviou, string agenciaContaReceber, string numeroContaReceber, decimal valor)
         {
-            var contaEnviou = await ObterPorId(idContaEnviou, true, true);
+            var contaEnviou = await ObterPorId(idContaEnviou, true);
 
             if (valor > contaEnviou.ValorEmConta)
             {
                 throw new ApplicationException("O valor a ser enviado é maior do que o valor disponível");
             }
 
-            var contaReceber = await ObterPorAgenciaNumero(agenciaContaReceber, numeroContaReceber, false, false);
+            var contaReceber = await ObterPorAgenciaNumero(agenciaContaReceber, numeroContaReceber, false);
 
             if (contaReceber.Id == idContaEnviou)
             {
                 throw new ApplicationException("Não é possivel tranferir para a mesma conta");
             }
 
-            var transacao = new Transacao
+
+            try
             {
-                ContaEnviouId = contaEnviou.Id,
-                ContaRecebeuId = contaReceber.Id,
-                Valor = valor,
-                DataOperacao = DateTime.Now,
-                Id = Guid.NewGuid().ToString(),
-            };
+                var transacaoContaEnviou = new Transacao
+                {
+                    ContaRecebeuId = contaReceber.Id,
+                    Valor = valor * -1,
+                    DataOperacao = DateTime.Now,
+                    Id = Guid.NewGuid().ToString(),
+                    ContaId = contaEnviou.Id,
+                    ContaRecebeuAgencia = contaReceber.Agencia,
+                    ContaRecebeuNumero = contaReceber.Numero,
+                    Descricao = $"{valor} enviado para {contaReceber.Agencia}-{contaReceber.Numero}"
+                };
+                await _transacaoRepo.Criar(transacaoContaEnviou);
 
-            transacao.Descricao = $"Transação de {valor:c} - {transacao.DataOperacao:dd/MM/yyyy}";
 
-            await _transacaoRepo.Criar(transacao);
+                var transacaoContaRecebeu = new Transacao
+                {
+                    ContaRecebeuId = contaReceber.Id,
+                    Valor = valor,
+                    DataOperacao = DateTime.Now,
+                    Id = Guid.NewGuid().ToString(),
+                    ContaId = contaReceber.Id,
+                    ContaRecebeuAgencia = contaReceber.Agencia,
+                    ContaRecebeuNumero = contaReceber.Numero,
+                    Descricao = $"{valor} recebido de {contaEnviou.Agencia}-{contaEnviou.Numero}"
+                };
+                await _transacaoRepo.Criar(transacaoContaRecebeu);
+
+                await Context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
 
 
-        public async Task<IEnumerable<Conta>> ObterContasUsuario(string usuarioId, bool transacoesRecebidas, bool transacoesEnviadas)
+        public async Task<IEnumerable<Conta>> ObterContasUsuario(string usuarioId, bool transacoes)
         {
             var query = Set
                 .Where(x => x.UsuarioId == usuarioId);
 
-            if (transacoesRecebidas)
+            if (transacoes)
             {
-                query = query.Include(x => x.TransacoesRecebidas);
-            }
-
-            if (transacoesEnviadas)
-            {
-                query = query.Include(x => x.TransacoesEnviadas);
+                query = query.Include(x => x.Transacoes);
             }
 
             return await query.ToListAsync();
@@ -88,7 +107,7 @@ namespace NetBank.Infra.Repos
 
 
         public async Task<Conta> ObterPorAgenciaNumero(
-            string agencia, string numero, bool transacoesRecebidas, bool transacoesEnviadas)
+            string agencia, string numero, bool transacoes)
         {
             var conta = Set.Where(
                 x => x.Agencia == agencia
@@ -99,14 +118,9 @@ namespace NetBank.Infra.Repos
                 throw new ApplicationException("Conta não encontrada");
             }
 
-            if (transacoesRecebidas)
+            if (transacoes)
             {
-                conta = conta.Include(x => x.TransacoesRecebidas);
-            }
-
-            if (transacoesEnviadas)
-            {
-                conta = conta.Include(x => x.TransacoesEnviadas);
+                conta = conta.Include(x => x.Transacoes);
             }
 
             return await conta.FirstOrDefaultAsync();
@@ -114,7 +128,7 @@ namespace NetBank.Infra.Repos
 
 
 
-        public async Task<Conta> ObterPorId(string id, bool transacoesRecebidas, bool transacoesEnviadas)
+        public async Task<Conta> ObterPorId(string id, bool transacoes)
         {
             var query = Set.Where(x => x.Id == id);
 
@@ -123,14 +137,9 @@ namespace NetBank.Infra.Repos
                 throw new ApplicationException("Conta não encontrada");
             }
 
-            if (transacoesRecebidas)
+            if (transacoes)
             {
-                query = query.Include(x => x.TransacoesRecebidas);
-            }
-
-            if (transacoesEnviadas)
-            {
-                query = query.Include(x => x.TransacoesEnviadas);
+                query = query.Include(x => x.Transacoes);
             }
 
             return await query.FirstOrDefaultAsync();

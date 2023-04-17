@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NetBank.Domain.Entidades;
 using NetBank.Domain.Interfaces;
 using NetBank.DTOs;
 
@@ -21,26 +22,14 @@ namespace NetBank.Api.Controllers
 
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<ContaDTO>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<Conta>), 200)]
         [ProducesResponseType(typeof(ErroDTO), 400)]
         public async Task<IActionResult> ObterContas()
         {
             try
             {
                 var id = User.FindFirst("Id")!.Value;
-                var contas = ContaDTO.ObterContasViewModel(await _contaRepo.ObterContasUsuario(id, true, true));
-
-                foreach (var conta in contas)
-                {
-                    foreach (var transacao in conta.TransacoesRecebidas)
-                    {
-                        transacao.ContaEnviou = null;
-                    }
-                    foreach (var transacao in conta.TransacoesEnviadas)
-                    {
-                        transacao.ContaEnviou = null;
-                    }
-                }
+                var contas = await _contaRepo.ObterContasUsuario(id, true);
                 return Ok(contas);
             }
             catch (Exception ex)
@@ -56,22 +45,13 @@ namespace NetBank.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [ProducesResponseType(typeof(ContaDTO), 200)]
+        [ProducesResponseType(typeof(Conta), 200)]
         [ProducesResponseType(typeof(ErroDTO), 400)]
         public async Task<IActionResult> ObterContaPorId([FromRoute] string id)
         {
             try
             {
-                var conta = new ContaDTO(await _contaRepo.ObterPorId(id, true, true));
-
-                foreach (var transacao in conta.TransacoesRecebidas)
-                {
-                    transacao.ContaEnviou = null;
-                }
-                foreach (var transacao in conta.TransacoesEnviadas)
-                {
-                    transacao.ContaEnviou = null;
-                }
+                var conta = await _contaRepo.ObterPorId(id, true);
 
                 return Ok(conta);
             }

@@ -10,7 +10,9 @@ namespace NetBank.Infra.Services
     {
         public static string GerarTokenUsuario(Usuario usuario)
         {
-            var key = Environment.GetEnvironmentVariable("JwtKey")!;
+            var key = Environment.GetEnvironmentVariable("JwtKey")
+                ?? throw new ApplicationException("Define uma chave para criptografia do Token na variável de ambiente JwtKey");
+
             var bytesKey = Encoding.ASCII.GetBytes(key);
 
             var tokenHanlder = new JwtSecurityTokenHandler();

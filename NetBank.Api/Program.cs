@@ -11,7 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(x =>
 {
-    var cn = builder.Configuration.GetConnectionString("DefaultConnection")!.Replace("DATABASE_NAME", "NetBankDB");
+    var cn = builder.Configuration.GetConnectionString("NetBank") 
+    ?? throw new ApplicationException("É necessário definir a string de conexão na variável de ambiente ConnectionStrings:NetBank");
+    
     x.UseSqlServer(cn);
 });
 

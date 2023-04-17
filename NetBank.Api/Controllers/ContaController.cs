@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NetBank.Api.Models;
-using NetBank.Domain.Entidades;
 using NetBank.Domain.Interfaces;
+using NetBank.DTOs;
 
 namespace NetBank.Api.Controllers
 {
@@ -22,19 +21,19 @@ namespace NetBank.Api.Controllers
 
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<ContaViewModel>), 200)]
-        [ProducesResponseType(typeof(ErrorModel), 400)]
+        [ProducesResponseType(typeof(IEnumerable<ContaDTO>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<ErroDTO>), 400)]
         public async Task<IActionResult> ObterContas()
         {
             try
             {
                 var id = User.FindFirst("Id")!.Value;
-                var contas = ContaViewModel.ObterContasViewModel(await _contaRepo.ObterContasUsuario(id, true, true));
+                var contas = ContaDTO.ObterContasViewModel(await _contaRepo.ObterContasUsuario(id, true, true));
                 return Ok(contas);
             }
             catch (Exception ex)
             {
-                var erro = new ErrorModel(400);
+                var erro = new ErroDTO(400);
                 erro.Status = 400;
                 erro.Errors.Add("Outro", new string[] { ex.Message });
                 return BadRequest(erro);
@@ -45,9 +44,11 @@ namespace NetBank.Api.Controllers
 
         [HttpPost]
         [Route("{id}/nova-transacao")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(typeof(IEnumerable<ErroDTO>), 400)]
         public async Task<IActionResult> NovaTransacao(
             [FromRoute] string id,
-            [FromBody] TransacaoViewModel model)
+            [FromBody] TransacaoDTO model)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +59,7 @@ namespace NetBank.Api.Controllers
                 }
                 catch (Exception ex)
                 {
-                    var erro = new ErrorModel(400);
+                    var erro = new ErroDTO(400);
                     erro.Status = 400;
                     erro.Errors.Add("Outro", new string[] { ex.Message });
                     return BadRequest(erro);

@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using NetBank.Api.Models;
 using NetBank.Domain.Entidades;
 using NetBank.Domain.Enums;
 using NetBank.Domain.Interfaces;
+using NetBank.DTOs;
 using NetBank.Infra.Services;
 
 namespace NetBank.Api.Controllers
@@ -59,8 +58,8 @@ namespace NetBank.Api.Controllers
         [HttpPost]
         [Route("cadastro")]
         [ProducesResponseType(201)]
-        [ProducesResponseType(typeof(ErrorModel), 400)]
-        public async Task<IActionResult> Criar([FromBody] UsuarioViewModel model)
+        [ProducesResponseType(typeof(ErroDTO), 400)]
+        public async Task<IActionResult> Criar([FromBody] UsuarioDTO model)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +86,7 @@ namespace NetBank.Api.Controllers
                 }
                 catch (Exception ex)
                 {
-                    var erro = new ErrorModel(400);
+                    var erro = new ErroDTO(400);
                     erro.Status = 400;
                     erro.Errors.Add("Outro", new string[] { ex.Message });
                     return BadRequest(erro);
@@ -101,9 +100,9 @@ namespace NetBank.Api.Controllers
 
         [HttpPost]
         [Route("login")]
-        [ProducesResponseType(typeof(UsuarioAutenticacaoViewModel), 200)]
-        [ProducesResponseType(typeof(ErrorModel), 400)]
-        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
+        [ProducesResponseType(typeof(UsuarioAutenticacaoDTO), 200)]
+        [ProducesResponseType(typeof(ErroDTO), 400)]
+        public async Task<IActionResult> Login([FromBody] LoginDTO model)
         {
             if (ModelState.IsValid)
             {
@@ -111,13 +110,11 @@ namespace NetBank.Api.Controllers
                 {
                     var usuario = await _usuarioRepo.ObterPorCpfSenha(model.CPF, model.Senha);
                     var token = TokenService.GerarTokenUsuario(usuario);
-                    usuario.Senha = "";
-
-                    return StatusCode(200, new UsuarioAutenticacaoViewModel(usuario, token));
+                    return StatusCode(200, new UsuarioAutenticacaoDTO(usuario, token));
                 }
                 catch (Exception ex)
                 {
-                    var erro = new ErrorModel(400);
+                    var erro = new ErroDTO(400);
                     erro.Errors.Add("Outro", new string[] { ex.Message });
                     return BadRequest(erro);
                 }
@@ -132,22 +129,28 @@ namespace NetBank.Api.Controllers
         [Authorize]
         [HttpGet]
         [Route("token-valido")]
-        [ProducesResponseType(typeof(Usuario), 200)]
-        [ProducesResponseType(typeof(ErrorModel), 400)]
-        [ProducesResponseType(401)]
         public async Task<IActionResult> VerificaTokenValido()
         {
             try
             {
                 var id = User.FindFirst("Id")!.Value;
-                    var usuario = await _usuarioRepo.ObterPorId(id);
+                var usuario = await _usuarioRepo.ObterPorId(id);
                 usuario.Senha = "";
 
-                return StatusCode(200, usuario);
+                return StatusCode(200, new
+                {
+                    usuario.NomeCompleto,
+                    usuario.Email,
+                    usuario.Telefone,
+                    usuario.CPF,
+                    usuario.DataNascimento,
+                    usuario.Ativo,
+                    usuario.Id,
+                });
             }
             catch (Exception ex)
             {
-                var erro = new ErrorModel(400);
+                var erro = new ErroDTO(400);
                 erro.Errors.Add("Outro", new string[] { ex.Message });
                 return BadRequest(erro);
             }

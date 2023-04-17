@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NetBank.Api.Models;
+using NetBank.Domain.Entidades;
 using NetBank.Domain.Interfaces;
+using NetBank.DTOs;
 
 namespace NetBank.Api.Controllers
 {
@@ -22,6 +23,8 @@ namespace NetBank.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [ProducesResponseType(typeof(IEnumerable<Transacao>), 200)]
+        [ProducesResponseType(typeof(ErroDTO), 400)]
         public async Task<IActionResult> ObterTransacoes(
             [FromRoute] string id,
             [FromQuery] DateTime? dataInicial,
@@ -36,7 +39,7 @@ namespace NetBank.Api.Controllers
             }
             catch (Exception ex)
             {
-                var erro = new ErrorModel(400);
+                var erro = new ErroDTO(400);
                 erro.Status = 400;
                 erro.Errors.Add("Outro", new string[] { ex.Message });
                 return BadRequest(erro);

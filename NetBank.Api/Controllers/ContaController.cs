@@ -29,6 +29,18 @@ namespace NetBank.Api.Controllers
             {
                 var id = User.FindFirst("Id")!.Value;
                 var contas = ContaDTO.ObterContasViewModel(await _contaRepo.ObterContasUsuario(id, true, true));
+
+                foreach (var conta in contas)
+                {
+                    foreach (var transacao in conta.TransacoesRecebidas)
+                    {
+                        transacao.ContaEnviou = null;
+                    }
+                    foreach (var transacao in conta.TransacoesEnviadas)
+                    {
+                        transacao.ContaEnviou = null;
+                    }
+                }
                 return Ok(contas);
             }
             catch (Exception ex)
@@ -50,8 +62,18 @@ namespace NetBank.Api.Controllers
         {
             try
             {
-                var contas = new ContaDTO(await _contaRepo.ObterPorId(id, true, true));
-                return Ok(contas);
+                var conta = new ContaDTO(await _contaRepo.ObterPorId(id, true, true));
+
+                foreach (var transacao in conta.TransacoesRecebidas)
+                {
+                    transacao.ContaEnviou = null;
+                }
+                foreach (var transacao in conta.TransacoesEnviadas)
+                {
+                    transacao.ContaEnviou = null;
+                }
+
+                return Ok(conta);
             }
             catch (Exception ex)
             {

@@ -42,13 +42,35 @@ namespace NetBank.Api.Controllers
 
 
 
+        [HttpGet]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(ContaDTO), 200)]
+        [ProducesResponseType(typeof(ErroDTO), 400)]
+        public async Task<IActionResult> ObterContaPorId([FromRoute] string id)
+        {
+            try
+            {
+                var contas = new ContaDTO(await _contaRepo.ObterPorId(id, true, true));
+                return Ok(contas);
+            }
+            catch (Exception ex)
+            {
+                var erro = new ErroDTO(400);
+                erro.Status = 400;
+                erro.Errors.Add("Outro", new string[] { ex.Message });
+                return BadRequest(erro);
+            }
+        }
+
+
+
         [HttpPost]
         [Route("{id}/nova-transacao")]
         [ProducesResponseType(201)]
         [ProducesResponseType(typeof(ErroDTO), 400)]
         public async Task<IActionResult> NovaTransacao(
             [FromRoute] string id,
-            [FromBody] TransacaoDTO model)
+            [FromBody] CriarTransacaoDTO model)
         {
             if (ModelState.IsValid)
             {

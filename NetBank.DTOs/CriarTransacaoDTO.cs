@@ -2,7 +2,7 @@
 
 namespace NetBank.DTOs
 {
-    public class TransacaoDTO
+    public class CriarTransacaoDTO
     {
         [Required(ErrorMessage = "É necessário informar um valor")]
         public decimal Valor { get; set; }

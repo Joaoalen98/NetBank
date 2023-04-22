@@ -6,7 +6,7 @@
     <VerticalStackLayout>
         <StackLayout Padding="20" BackgroundColor="#512BD4">
             <Label Text="Valor em conta:" TextColor="White" />
-            <Label Text="{Binding ValorEmConta}" TextColor="White" />
+            <Label Text="{Binding ValorEmConta, StringFormat='{0:c}'}" TextColor="White" />
         </StackLayout>
 
         <StackLayout Padding="20">

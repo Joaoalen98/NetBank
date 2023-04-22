@@ -7,10 +7,12 @@
         <StackLayout BackgroundColor="#512BD4" Padding="20">
             <Label Text="Valor em conta:" TextColor="White" />
             <Label 
-                Text="{Binding ValorEmConta}" 
+                Text="{Binding ValorEmConta, StringFormat='{0:c}'}" 
                 TextColor="White"
                 FontSize="30"
                 FontAttributes="Bold"/>
+            <Label TextColor="White" Text="{Binding Agencia, StringFormat='Agência: {0}'}" />
+            <Label TextColor="White" Text="{Binding Numero, StringFormat='Conta: {0}'}" />
         </StackLayout>
 
         <StackLayout Padding="20">
@@ -41,9 +43,12 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout VerticalOptions="FillAndExpand" Padding="5" Spacing="5">
-                                <Label FontAttributes="Bold" FontSize="20" Text="{Binding Valor}"/>
+                                <Label 
+                                    FontAttributes="Bold" 
+                                    FontSize="20" 
+                                    Text="{Binding Valor, StringFormat='{0:c}'}"/>
                                 <Label Text="{Binding Descricao}" />
-                                <Label Text="{Binding DataOperacao}" />
+                                <Label Text="{Binding DataOperacao, StringFormat='{0:dd/MM/yyyy}'}" />
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

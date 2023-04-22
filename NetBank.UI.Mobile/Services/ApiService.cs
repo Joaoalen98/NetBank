@@ -155,10 +155,13 @@ namespace NetBank.UI.Mobile.Services
                 var json = JsonConvert.DeserializeObject<ErroDTO>(res);
 
                 var mensagemBuilder = new StringBuilder();
-                mensagemBuilder.Append("Erro ao enviar transação \n");                
-                foreach (var erro in json.Errors)
+                mensagemBuilder.Append("Erro ao enviar transação \n");
+                foreach (var erros in json.Errors)
                 {
-                    mensagemBuilder.Append($"- {erro} \n");
+                    foreach (var erro in erros.Value)
+                    {
+                        mensagemBuilder.Append($"- {erro} \n");
+                    }
                 }
 
                 throw new ApplicationException(mensagemBuilder.ToString());

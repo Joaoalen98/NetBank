@@ -28,7 +28,7 @@ public partial class DetalhesContaPage : ContentPage
     {
         base.OnAppearing();
 
-        
+
 
         listTransacoes.ItemsSource = await GetTransacoes();
     }
@@ -39,8 +39,10 @@ public partial class DetalhesContaPage : ContentPage
         var dataInicial = datePickerDataInicial.Date;
         var dataFinal = datePickerDataFinal.Date.AddDays(1);
 
-        return await _apiService.GetTransacoesConta(
+        var transacoes = await _apiService.GetTransacoesConta(
             Conta.Id, dataInicial, dataFinal);
+
+        return transacoes.OrderByDescending(x => x.DataOperacao);
     }
 
     private async void btnPesquisar_Clicked(object sender, EventArgs e)

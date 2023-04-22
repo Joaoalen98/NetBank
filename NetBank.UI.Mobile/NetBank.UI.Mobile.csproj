@@ -50,10 +50,18 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Pages\" />
+	  <ProjectReference Include="..\NetBank.Domain\NetBank.Domain.csproj" />
+	  <ProjectReference Include="..\NetBank.DTOs\NetBank.DTOs.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\CadastroPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\DetalhesContaPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

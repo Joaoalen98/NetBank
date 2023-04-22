@@ -3,57 +3,61 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NetBank.UI.Mobile.Pages.DetalhesContaPage"
              Title="Conta">
-    <VerticalStackLayout>
-        <StackLayout BackgroundColor="#512BD4" Padding="20">
-            <Label Text="Valor em conta:" TextColor="White" />
-            <Label 
+    <ScrollView>
+        <VerticalStackLayout>
+            <StackLayout BackgroundColor="#512BD4" Padding="20">
+                <Label Text="Valor em conta:" TextColor="White" />
+                <Label 
                 Text="{Binding ValorEmConta, StringFormat='{0:c}'}" 
                 TextColor="White"
                 FontSize="30"
                 FontAttributes="Bold"/>
-            <Label TextColor="White" Text="{Binding Agencia, StringFormat='Agência: {0}'}" />
-            <Label TextColor="White" Text="{Binding Numero, StringFormat='Conta: {0}'}" />
-        </StackLayout>
-
-        <StackLayout Padding="20">
-            <FlexLayout JustifyContent="SpaceAround" HorizontalOptions="FillAndExpand">
-                <Button x:Name="btnNovaTransacao" Clicked="btnNovaTransacao_Clicked" Text="Tranferir" />
-                <Button Text="Pagar Boleto" />
-            </FlexLayout>
-        </StackLayout>
-
-        <StackLayout Padding="20">
-            <StackLayout>
-                <Label Text="Data Inicial" />
-                <DatePicker x:Name="datePickerDataInicial" />
+                <Label TextColor="White" Text="{Binding Agencia, StringFormat='Agência: {0}'}" />
+                <Label TextColor="White" Text="{Binding Numero, StringFormat='Conta: {0}'}" />
             </StackLayout>
 
             <StackLayout>
-                <Label Text="Data Final" />
-                <DatePicker x:Name="datePickerDataFinal" />
+                <StackLayout Padding="20">
+                    <FlexLayout JustifyContent="SpaceAround" HorizontalOptions="FillAndExpand">
+                        <Button x:Name="btnNovaTransacao" Clicked="btnNovaTransacao_Clicked" Text="Tranferir" />
+                        <Button Text="Pagar Boleto" />
+                    </FlexLayout>
+                </StackLayout>
+
+                <StackLayout Padding="20">
+                    <StackLayout>
+                        <Label Text="Data Inicial" />
+                        <DatePicker x:Name="datePickerDataInicial" />
+                    </StackLayout>
+
+                    <StackLayout>
+                        <Label Text="Data Final" />
+                        <DatePicker x:Name="datePickerDataFinal" />
+                    </StackLayout>
+
+                    <Button x:Name="btnPesquisar" Clicked="btnPesquisar_Clicked" Text="Pesquisar" />
+                </StackLayout>
+
+                <StackLayout Padding="20">
+                    <Label Text="Seu Extrato:" FontSize="20" Padding="10" FontAttributes="Bold" />
+                    <ListView HasUnevenRows="True" SelectionMode="None" x:Name="listTransacoes">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout VerticalOptions="FillAndExpand" Padding="5" Spacing="5">
+                                        <Label
+                                        FontAttributes="Bold" 
+                                        FontSize="20" 
+                                        Text="{Binding Valor, StringFormat='{0:c}'}"/>
+                                        <Label Text="{Binding Descricao}" />
+                                        <Label Text="{Binding DataOperacao, StringFormat='{0:dd/MM/yyyy}'}" />
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
             </StackLayout>
-
-            <Button x:Name="btnPesquisar" Clicked="btnPesquisar_Clicked" Text="Pesquisar" />
-        </StackLayout>
-
-        <StackLayout Padding="20">
-            <Label Text="Seu Extrato:" FontSize="20" Padding="10" FontAttributes="Bold" />
-            <ListView HasUnevenRows="True" SelectionMode="None" x:Name="listTransacoes">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout VerticalOptions="FillAndExpand" Padding="5" Spacing="5">
-                                <Label 
-                                    FontAttributes="Bold" 
-                                    FontSize="20" 
-                                    Text="{Binding Valor, StringFormat='{0:c}'}"/>
-                                <Label Text="{Binding Descricao}" />
-                                <Label Text="{Binding DataOperacao, StringFormat='{0:dd/MM/yyyy}'}" />
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

@@ -3,47 +3,49 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NetBank.UI.Mobile.Pages.CadastroPage"
              Title="Cadastro">
-    <VerticalStackLayout Padding="20">
-        <Label 
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Label 
             Text="Crie sua conta na NetBank!!"
             VerticalOptions="Center" 
             HorizontalOptions="Center"
             FontSize="20"
             FontAttributes="Bold"/>
 
-        <StackLayout>
-            <Entry
-                Placeholder="Insira seu Nome Completo"
-                x:Name="entryNome"
-                Margin="10"/>
-            <Entry
-                Placeholder="Insira seu Email"
-                x:Name="entryEmail"
-                Margin="10"/>
-            <Entry
-                Placeholder="Insira seu Telefone"
-                x:Name="entryTelefone"
-                Margin="10"/>
-            <Entry
-                Placeholder="Insira seu CPF"
-                x:Name="entryCPF"
-                Margin="10"/>
-            <DatePicker
-                x:Name="datePickerDataNascimento"
-                Margin="10"/>
-            <Entry 
-                Placeholder="Insira sua senha"
-                x:Name="entrySenha"
-                Margin="10"/>
-            <Entry
-                Placeholder="Confirmação de senha"
-                x:Name="entryConfirmacaoSenha"
-                Margin="10"/>
+            <StackLayout>
+                <Entry
+                    Placeholder="Insira seu Nome Completo"
+                    x:Name="entryNome"
+                    Margin="10"/>
+                <Entry
+                    Placeholder="Insira seu Email"
+                    x:Name="entryEmail"
+                    Margin="10"/>
+                <Entry
+                    Placeholder="Insira seu Telefone"
+                    x:Name="entryTelefone"
+                    Margin="10"/>
+                <Entry
+                    Placeholder="Insira seu CPF"
+                    x:Name="entryCPF"
+                    Margin="10"/>
+                <DatePicker
+                    x:Name="datePickerDataNascimento"
+                    Margin="10"/>
+                <Entry 
+                    Placeholder="Insira sua senha"
+                    x:Name="entrySenha"
+                    Margin="10"/>
+                <Entry
+                    Placeholder="Confirmação de senha"
+                    x:Name="entryConfirmacaoSenha"
+                    Margin="10"/>
 
-            <Button
-                Text="Cadastrar"
-                x:Name="btnSemConta"
-                Clicked="btnCadastrar_Clicked"/>
-        </StackLayout>
-    </VerticalStackLayout>
+                <Button
+                    Text="Cadastrar"
+                    x:Name="btnSemConta"
+                    Clicked="btnCadastrar_Clicked"/>
+            </StackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

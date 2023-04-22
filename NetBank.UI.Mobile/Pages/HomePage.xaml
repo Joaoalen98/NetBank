@@ -34,14 +34,17 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout Orientation="Horizontal" Spacing="5" Padding="10">
-                                    <Label Text="{Binding Tipo}" />
-                                    <Label 
-                                        Text="{Binding ValorEmConta}" 
-                                        HorizontalOptions="EndAndExpand"
-                                        TextColor="#512BD4"
-                                        FontSize="20"
-                                        FontAttributes="Bold"/>
+                                <StackLayout Spacing="5" Padding="15">
+                                    <FlexLayout JustifyContent="SpaceBetween" HorizontalOptions="FillAndExpand">
+                                        <Label Text="{Binding Tipo}" />
+                                        <Label 
+                                            Text="{Binding ValorEmConta, StringFormat='{0:c}'}" 
+                                            HorizontalOptions="EndAndExpand"
+                                            TextColor="#512BD4"
+                                            FontAttributes="Bold"/>
+                                    </FlexLayout>
+                                    <Label Text="{Binding Agencia, StringFormat='Agência: {0}'}" />
+                                    <Label Text="{Binding Numero, StringFormat='Conta: {0}'}" />
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>

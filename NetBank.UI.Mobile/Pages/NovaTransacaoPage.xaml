@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NetBank.UI.Mobile.Pages.NovaTransacaoPage"
+             Title="Nova Transacao">
+    <VerticalStackLayout>
+        <StackLayout Padding="20" BackgroundColor="#512BD4">
+            <Label Text="Valor em conta:" TextColor="White" />
+            <Label Text="{Binding ValorEmConta}" TextColor="White" />
+        </StackLayout>
+
+        <StackLayout Padding="20">
+            <StackLayout Padding="0, 0, 0, 10">
+                <Label Text="Valor" />
+                <Entry Keyboard="Numeric" x:Name="entryValor" Placeholder="R$ 0,00" />
+            </StackLayout>
+
+            <StackLayout Padding="0, 0, 0, 10">
+                <Label Text="Agência" />
+                <Entry x:Name="entryAgencia" Placeholder="0001" />
+            </StackLayout>
+
+            <StackLayout Padding="0, 0, 0, 10">
+                <Label Text="Conta" />
+                <Entry x:Name="entryNumero" Placeholder="xxxxxx-x" />
+            </StackLayout>
+
+            <Button x:Name="btnEnviaTrasacao" Clicked="btnEnviaTrasacao_Clicked" Text="Enviar" />
+        </StackLayout>
+
+    </VerticalStackLayout>
+</ContentPage>

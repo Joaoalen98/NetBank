@@ -52,4 +52,10 @@ public partial class DetalhesContaPage : ContentPage
     {
 
     }
+
+
+    private async void btnNovaTransacao_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new NovaTransacaoPage(Conta));
+    }
 }

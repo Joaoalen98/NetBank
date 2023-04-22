@@ -37,7 +37,7 @@ public partial class DetalhesContaPage : ContentPage
     private async Task<IEnumerable<Transacao>> GetTransacoes()
     {
         var dataInicial = datePickerDataInicial.Date;
-        var dataFinal = datePickerDataFinal.Date;
+        var dataFinal = datePickerDataFinal.Date.AddDays(1);
 
         return await _apiService.GetTransacoesConta(
             Conta.Id, dataInicial, dataFinal);

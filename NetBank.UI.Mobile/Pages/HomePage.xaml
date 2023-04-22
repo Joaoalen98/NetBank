@@ -17,12 +17,6 @@
                     FontAttributes="Bold"/>
             </StackLayout>
 
-            <StackLayout Padding="20">
-                <FlexLayout JustifyContent="SpaceAround" HorizontalOptions="FillAndExpand">
-                    <Button Text="Tranferir" />
-                    <Button Text="Pagar Boleto" />
-                </FlexLayout>
-            </StackLayout>
 
             <StackLayout Padding="20">
                 <Label

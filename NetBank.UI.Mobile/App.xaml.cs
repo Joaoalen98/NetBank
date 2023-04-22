@@ -1,4 +1,6 @@
-﻿namespace NetBank.UI.Mobile
+﻿using NetBank.UI.Mobile.Pages;
+
+namespace NetBank.UI.Mobile
 {
     public partial class App : Application
     {
@@ -6,7 +8,7 @@
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new NavigationPage(new HomePage());
         }
     }
 }

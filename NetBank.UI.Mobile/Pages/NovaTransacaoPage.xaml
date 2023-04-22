@@ -4,9 +4,15 @@
              x:Class="NetBank.UI.Mobile.Pages.NovaTransacaoPage"
              Title="Nova Transacao">
     <VerticalStackLayout>
-        <StackLayout Padding="20" BackgroundColor="#512BD4">
+        <StackLayout BackgroundColor="#512BD4" Padding="20">
             <Label Text="Valor em conta:" TextColor="White" />
-            <Label Text="{Binding ValorEmConta, StringFormat='{0:c}'}" TextColor="White" />
+            <Label 
+                Text="{Binding ValorEmConta, StringFormat='{0:c}'}" 
+                TextColor="White"
+                FontSize="30"
+                FontAttributes="Bold"/>
+            <Label TextColor="White" Text="{Binding Agencia, StringFormat='Agência: {0}'}" />
+            <Label TextColor="White" Text="{Binding Numero, StringFormat='Conta: {0}'}" />
         </StackLayout>
 
         <StackLayout Padding="20">

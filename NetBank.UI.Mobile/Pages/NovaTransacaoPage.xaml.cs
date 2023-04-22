@@ -17,6 +17,7 @@ public partial class NovaTransacaoPage : ContentPage
 
         InitializeComponent();
         BindingContext = Conta;
+
     }
 
 

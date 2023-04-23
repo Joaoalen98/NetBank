@@ -37,7 +37,7 @@ namespace NetBank.Infra.Repos
         public async Task EnviarTransacao(
             string idContaEnviou, string agenciaContaReceber, string numeroContaReceber, decimal valor)
         {
-            var contaEnviou = await ObterPorId(idContaEnviou, true);
+            var contaEnviou = await ObterPorId(idContaEnviou, false);
 
             if (valor > contaEnviou.ValorEmConta)
             {
@@ -61,6 +61,8 @@ namespace NetBank.Infra.Repos
                     DataOperacao = DateTime.Now,
                     Id = Guid.NewGuid().ToString(),
                     ContaId = contaEnviou.Id,
+                    ContaEnviouAgencia = contaEnviou.Agencia,
+                    ContaEnviouNumero = contaEnviou.Numero,
                     ContaRecebeuAgencia = contaReceber.Agencia,
                     ContaRecebeuNumero = contaReceber.Numero,
                     Descricao = $"Transferência enviada para {contaReceber.Agencia}-{contaReceber.Numero}"
@@ -77,6 +79,8 @@ namespace NetBank.Infra.Repos
                     ContaId = contaReceber.Id,
                     ContaRecebeuAgencia = contaReceber.Agencia,
                     ContaRecebeuNumero = contaReceber.Numero,
+                    ContaEnviouAgencia = contaEnviou.Agencia,
+                    ContaEnviouNumero = contaEnviou.Numero,
                     Descricao = $"Transferência recebida de {contaEnviou.Agencia}-{contaEnviou.Numero}"
                 };
                 await _transacaoRepo.Criar(transacaoContaRecebeu);

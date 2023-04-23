@@ -13,6 +13,10 @@ namespace NetBank.Domain.Entidades
 
         public virtual Conta Conta { get; set; }
 
+        public string ContaEnviouAgencia { get; set; }
+
+        public string ContaEnviouNumero { get; set; }
+
         public string ContaRecebeuId { get; set; }
 
         public string ContaRecebeuAgencia { get; set; }

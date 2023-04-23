@@ -12,6 +12,10 @@ namespace NetBank.DTOs
 
         public string ContaEnviouId { get; set; }
 
+        public string ContaEnviouAgencia { get; set; }
+
+        public string ContaEnviouNumero { get; set; }
+
         public string ContaRecebeuId { get; set; }
 
         public string ContaRecebeuAgencia { get; set; }
@@ -40,6 +44,8 @@ namespace NetBank.DTOs
             {
                 Id = transacao.Id,
                 ContaEnviouId = transacao.ContaId,
+                ContaEnviouNumero = transacao.ContaEnviouNumero,
+                ContaEnviouAgencia = transacao.ContaEnviouAgencia,
                 ContaRecebeuAgencia = transacao.ContaRecebeuAgencia,
                 ContaRecebeuId = transacao.ContaRecebeuId,
                 ContaRecebeuNumero = transacao.ContaRecebeuNumero,

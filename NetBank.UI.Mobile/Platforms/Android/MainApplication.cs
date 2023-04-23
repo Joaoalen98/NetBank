@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace NetBank.UI.Mobile
+namespace NetBank.UI.Mobile.Platforms.Android
 {
     [Application]
     public class MainApplication : MauiApplication

@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace NetBank.UI.Mobile
+namespace NetBank.UI.Mobile.Platforms.iOS
 {
     public class Program
     {

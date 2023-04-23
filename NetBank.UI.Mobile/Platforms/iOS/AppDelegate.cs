@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace NetBank.UI.Mobile
+namespace NetBank.UI.Mobile.Platforms.iOS
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

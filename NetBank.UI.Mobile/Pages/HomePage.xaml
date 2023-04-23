@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:pages="clr-namespace:NetBank.UI.Mobile.Pages"
              x:Class="NetBank.UI.Mobile.Pages.HomePage"
-             Title="HomePage">
+             Title="Home">
     <ScrollView VerticalOptions="Fill">
         <StackLayout HorizontalOptions="Fill">
             <StackLayout

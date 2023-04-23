@@ -58,6 +58,6 @@ public partial class HomePage : ContentPage
     private async void listContas_ItemTapped(object sender, ItemTappedEventArgs e)
     {
         var conta = (ContaDTO)e.Item;
-        await Navigation.PushAsync(new DetalhesContaPage(conta));
+        await Navigation.PushAsync(new DetalhesContaPage(conta.Id));
     }
 }

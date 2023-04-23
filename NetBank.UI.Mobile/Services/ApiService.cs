@@ -35,7 +35,7 @@ namespace NetBank.UI.Mobile.Services
         private string TrataMensagemErro(Dictionary<string, IEnumerable<string>> dict)
         {
             var mensagemBuilder = new StringBuilder();
-            mensagemBuilder.Append("Erro ao enviar transação \n");
+            mensagemBuilder.Append("Erro \n");
             foreach (var erros in dict)
             {
                 foreach (var erro in erros.Value)

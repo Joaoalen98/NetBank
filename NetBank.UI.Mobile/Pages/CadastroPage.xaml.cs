@@ -35,6 +35,7 @@ public partial class CadastroPage : ContentPage
         try
         {
             await _apiService.CadastrarUsuario(usuarioDTO);
+            await DisplayAlert("Sucesso", "Usuário cadastrado com sucesso", "Ir para login");
             await Navigation.PushAsync(new LoginPage());
         }
         catch (Exception ex)

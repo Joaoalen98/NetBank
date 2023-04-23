@@ -8,9 +8,9 @@ public partial class NovaTransacaoPage : ContentPage
 {
     ApiService ApiService;
 
-    public Conta Conta { get; set; }
+    public ContaDTO Conta { get; set; }
 
-    public NovaTransacaoPage(Conta conta)
+    public NovaTransacaoPage(ContaDTO conta)
     {
         Conta = conta;
         ApiService = new ApiService();

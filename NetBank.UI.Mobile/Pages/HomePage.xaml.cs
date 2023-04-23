@@ -1,4 +1,5 @@
 using NetBank.Domain.Entidades;
+using NetBank.DTOs;
 using NetBank.UI.Mobile.Services;
 
 namespace NetBank.UI.Mobile.Pages;
@@ -40,7 +41,7 @@ public partial class HomePage : ContentPage
         {
             try
             {
-                var usuario = await ApiService.ValidaToken(token);
+                var usuario = await ApiService.ValidaToken();
                 return true;
             }
             catch (Exception ex)
@@ -56,7 +57,7 @@ public partial class HomePage : ContentPage
 
     private async void listContas_ItemTapped(object sender, ItemTappedEventArgs e)
     {
-        var conta = (Conta)e.Item;
+        var conta = (ContaDTO)e.Item;
         await Navigation.PushAsync(new DetalhesContaPage(conta));
     }
 }

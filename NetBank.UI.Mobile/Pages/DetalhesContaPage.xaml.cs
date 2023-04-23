@@ -1,4 +1,5 @@
 using NetBank.Domain.Entidades;
+using NetBank.DTOs;
 using NetBank.UI.Mobile.Services;
 
 namespace NetBank.UI.Mobile.Pages;
@@ -7,17 +8,18 @@ public partial class DetalhesContaPage : ContentPage
 {
     ApiService _apiService;
 
-    public Conta Conta;
+    public ContaDTO Conta;
 
-    public DetalhesContaPage(Conta conta)
+    public DetalhesContaPage(ContaDTO conta)
     {
         Conta = conta;
-
-
         InitializeComponent();
-        BindingContext = Conta;
 
         _apiService = new ApiService();
+
+        lblValorEmConta.Text = conta.ValorEmConta.ToString("c");
+        lblAgencia.Text = $"Agência: {conta.Agencia}";
+        lblNumero.Text = $"Número: {conta.Numero}";
 
         datePickerDataInicial.Date = DateTime.Now.AddMonths(-1);
         datePickerDataFinal.Date = DateTime.Now;
@@ -34,7 +36,7 @@ public partial class DetalhesContaPage : ContentPage
     }
 
 
-    private async Task<IEnumerable<Transacao>> GetTransacoes()
+    private async Task<IEnumerable<TransacaoDTO>> GetTransacoes()
     {
         var dataInicial = datePickerDataInicial.Date;
         var dataFinal = datePickerDataFinal.Date.AddDays(1);

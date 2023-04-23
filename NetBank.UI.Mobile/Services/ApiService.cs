@@ -70,7 +70,7 @@ namespace NetBank.UI.Mobile.Services
 
 
 
-        public async Task<Usuario> ValidaToken(string token)
+        public async Task<Usuario> ValidaToken()
         {
             var req = await _http.GetAsync("api/v1/usuario/token-valido");
 
@@ -89,14 +89,14 @@ namespace NetBank.UI.Mobile.Services
 
 
 
-        public async Task<IEnumerable<Conta>> GetContasUsuario()
+        public async Task<IEnumerable<ContaDTO>> GetContasUsuario()
         {
             var req = await _http.GetAsync("api/v1/conta");
             var res = await req.Content.ReadAsStringAsync();
 
             if (req.IsSuccessStatusCode)
             {
-                var json = JsonConvert.DeserializeObject<List<Conta>>(res);
+                var json = JsonConvert.DeserializeObject<List<ContaDTO>>(res);
                 return json;
             }
             else
@@ -107,14 +107,14 @@ namespace NetBank.UI.Mobile.Services
 
 
 
-        public async Task<Conta> GetContaUsuarioPorId(string id)
+        public async Task<ContaDTO> GetContaUsuarioPorId(string id)
         {
             var req = await _http.GetAsync($"api/v1/conta/{id}");
             var res = await req.Content.ReadAsStringAsync();
 
             if (req.IsSuccessStatusCode)
             {
-                var json = JsonConvert.DeserializeObject<Conta>(res);
+                var json = JsonConvert.DeserializeObject<ContaDTO>(res);
                 return json;
             }
             else
@@ -125,7 +125,7 @@ namespace NetBank.UI.Mobile.Services
 
 
 
-        public async Task<IEnumerable<Transacao>> GetTransacoesConta(
+        public async Task<IEnumerable<TransacaoDTO>> GetTransacoesConta(
             string idConta, DateTime dataInicial, DateTime dataFinal, string descricao = "")
         {
             var req = await _http.GetAsync($"api/v1/transacoes/{idConta}?dataInicial={dataInicial:yyyy-MM-dd}&dataFinal={dataFinal:yyyy-MM-dd}&descricao={descricao}");
@@ -134,7 +134,7 @@ namespace NetBank.UI.Mobile.Services
 
             if (req.IsSuccessStatusCode)
             {
-                var json = JsonConvert.DeserializeObject<List<Transacao>>(res);
+                var json = JsonConvert.DeserializeObject<List<TransacaoDTO>>(res);
                 return json;
             }
             else

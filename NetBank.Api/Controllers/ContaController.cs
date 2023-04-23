@@ -22,7 +22,7 @@ namespace NetBank.Api.Controllers
 
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Conta>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<ContaDTO>), 200)]
         [ProducesResponseType(typeof(ErroDTO), 400)]
         public async Task<IActionResult> ObterContas()
         {
@@ -30,7 +30,7 @@ namespace NetBank.Api.Controllers
             {
                 var id = User.FindFirst("Id")!.Value;
                 var contas = await _contaRepo.ObterContasUsuario(id, true);
-                return Ok(contas);
+                return Ok(ContaDTO.ObterListaContasDTO(contas));
             }
             catch (Exception ex)
             {
@@ -45,7 +45,7 @@ namespace NetBank.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [ProducesResponseType(typeof(Conta), 200)]
+        [ProducesResponseType(typeof(ContaDTO), 200)]
         [ProducesResponseType(typeof(ErroDTO), 400)]
         public async Task<IActionResult> ObterContaPorId([FromRoute] string id)
         {
@@ -53,7 +53,7 @@ namespace NetBank.Api.Controllers
             {
                 var conta = await _contaRepo.ObterPorId(id, true);
 
-                return Ok(conta);
+                return Ok(ContaDTO.ObterContaDTO(conta));
             }
             catch (Exception ex)
             {

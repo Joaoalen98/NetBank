@@ -23,7 +23,7 @@ namespace NetBank.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [ProducesResponseType(typeof(IEnumerable<Transacao>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<TransacaoDTO>), 200)]
         [ProducesResponseType(typeof(ErroDTO), 400)]
         public async Task<IActionResult> ObterTransacoes(
             [FromRoute] string id,
@@ -35,7 +35,7 @@ namespace NetBank.Api.Controllers
             try
             {
                 var transacoes = await _transacaoRepo.ObterPorFiltros(id, dataInicial, dataFinal, descricao, valor);
-                return Ok(transacoes);
+                return Ok(TransacaoDTO.ObterListaTransacaoDTO(transacoes));
             }
             catch (Exception ex)
             {

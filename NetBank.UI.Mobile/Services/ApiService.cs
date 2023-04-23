@@ -1,4 +1,5 @@
-﻿using NetBank.Domain.Entidades;
+﻿using GoogleGson;
+using NetBank.Domain.Entidades;
 using NetBank.DTOs;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -32,6 +33,21 @@ namespace NetBank.UI.Mobile.Services
             }
         }
 
+        private string TrataMensagemErro(Dictionary<string, IEnumerable<string>> dict)
+        {
+            var mensagemBuilder = new StringBuilder();
+            mensagemBuilder.Append("Erro ao enviar transação \n");
+            foreach (var erros in dict)
+            {
+                foreach (var erro in erros.Value)
+                {
+                    mensagemBuilder.Append($"- {erro} \n");
+                }
+            }
+
+            return mensagemBuilder.ToString();
+        }
+
 
 
         public async Task CadastrarUsuario(UsuarioDTO usuario)
@@ -43,7 +59,9 @@ namespace NetBank.UI.Mobile.Services
             if (!req.IsSuccessStatusCode)
             {
                 var json = JsonConvert.DeserializeObject<ErroDTO>(res);
-                throw new ApplicationException($"Erro no cadastro - {JsonConvert.SerializeObject(json.Errors)}");
+
+                var mensagem = TrataMensagemErro(json.Errors);
+                throw new ApplicationException(mensagem);
             }
         }
 
@@ -58,7 +76,9 @@ namespace NetBank.UI.Mobile.Services
             if (!req.IsSuccessStatusCode)
             {
                 var json = JsonConvert.DeserializeObject<ErroDTO>(res);
-                throw new ApplicationException($"Erro no login - {JsonConvert.SerializeObject(json.Errors)}");
+
+                var mensagem = TrataMensagemErro(json.Errors);
+                throw new ApplicationException(mensagem);
             }
             else
             {
@@ -154,17 +174,8 @@ namespace NetBank.UI.Mobile.Services
             {
                 var json = JsonConvert.DeserializeObject<ErroDTO>(res);
 
-                var mensagemBuilder = new StringBuilder();
-                mensagemBuilder.Append("Erro ao enviar transação \n");
-                foreach (var erros in json.Errors)
-                {
-                    foreach (var erro in erros.Value)
-                    {
-                        mensagemBuilder.Append($"- {erro} \n");
-                    }
-                }
-
-                throw new ApplicationException(mensagemBuilder.ToString());
+                var mensagem = TrataMensagemErro(json.Errors);
+                throw new ApplicationException(mensagem);
             }
         }
     }

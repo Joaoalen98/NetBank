@@ -22,10 +22,12 @@
                     x:Name="entryEmail"
                     Margin="10"/>
                 <Entry
+                    Keyboard="Numeric"
                     Placeholder="Insira seu Telefone"
                     x:Name="entryTelefone"
                     Margin="10"/>
                 <Entry
+                    Keyboard="Numeric"
                     Placeholder="Insira seu CPF"
                     x:Name="entryCPF"
                     Margin="10"/>
@@ -33,10 +35,12 @@
                     x:Name="datePickerDataNascimento"
                     Margin="10"/>
                 <Entry 
+                    IsPassword="True"
                     Placeholder="Insira sua senha"
                     x:Name="entrySenha"
                     Margin="10"/>
                 <Entry
+                    IsPassword="True"
                     Placeholder="Confirmação de senha"
                     x:Name="entryConfirmacaoSenha"
                     Margin="10"/>

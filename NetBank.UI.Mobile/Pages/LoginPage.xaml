@@ -13,6 +13,7 @@
 
         <StackLayout>
             <Entry
+                Keyboard="Numeric"
                 Placeholder="Insira seu CPF"
                 x:Name="entryCPF"
                 Margin="10"/>

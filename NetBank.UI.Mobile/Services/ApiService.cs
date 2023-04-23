@@ -1,5 +1,4 @@
-﻿using GoogleGson;
-using NetBank.Domain.Entidades;
+﻿using NetBank.Domain.Entidades;
 using NetBank.DTOs;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;

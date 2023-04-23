@@ -31,7 +31,7 @@
                 <Entry x:Name="entryNumero" Placeholder="xxxxxx-x" />
             </StackLayout>
 
-            <Button x:Name="btnEnviaTrasacao" Clicked="btnEnviaTrasacao_Clicked" Text="Enviar" />
+            <Button x:Name="btnEnviaTransacao" Clicked="btnEnviaTransacao_Clicked" Text="Enviar" />
         </StackLayout>
 
     </VerticalStackLayout>

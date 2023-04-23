@@ -24,7 +24,7 @@ public partial class NovaTransacaoPage : ContentPage
     }
 
 
-    private async void btnEnviaTrasacao_Clicked(object sender, EventArgs e)
+    private async void btnEnviaTransacao_Clicked(object sender, EventArgs e)
     {
         var valor = Convert.ToDecimal(entryValor.Text);
         var agencia = entryAgencia.Text;

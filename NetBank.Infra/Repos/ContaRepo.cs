@@ -63,7 +63,7 @@ namespace NetBank.Infra.Repos
                     ContaId = contaEnviou.Id,
                     ContaRecebeuAgencia = contaReceber.Agencia,
                     ContaRecebeuNumero = contaReceber.Numero,
-                    Descricao = $"{valor} enviado para {contaReceber.Agencia}-{contaReceber.Numero}"
+                    Descricao = $"Transferência enviada para {contaReceber.Agencia}-{contaReceber.Numero}"
                 };
                 await _transacaoRepo.Criar(transacaoContaEnviou);
 
@@ -77,7 +77,7 @@ namespace NetBank.Infra.Repos
                     ContaId = contaReceber.Id,
                     ContaRecebeuAgencia = contaReceber.Agencia,
                     ContaRecebeuNumero = contaReceber.Numero,
-                    Descricao = $"{valor} recebido de {contaEnviou.Agencia}-{contaEnviou.Numero}"
+                    Descricao = $"Transferência recebida de {contaEnviou.Agencia}-{contaEnviou.Numero}"
                 };
                 await _transacaoRepo.Criar(transacaoContaRecebeu);
 

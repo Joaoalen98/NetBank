@@ -59,14 +59,15 @@ public partial class DetalhesContaPage : ContentPage
         listTransacoes.ItemsSource = await GetTransacoes();
     }
 
-    private void btnComprovante_Clicked(object sender, EventArgs e)
-    {
 
-    }
-
-    private async void listTransacoes_ItemTapped(object sender, ItemTappedEventArgs e)
     private async void btnNovaTransacao_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new NovaTransacaoPage(_conta));
+    }
+
+    private async void listTransacoes_ItemTapped(object sender, ItemTappedEventArgs e)
+    {
+        var transacao = (TransacaoDTO)e.Item;
+        await Navigation.PushAsync(new ComprovanteTransacaoPage(transacao));
     }
 }

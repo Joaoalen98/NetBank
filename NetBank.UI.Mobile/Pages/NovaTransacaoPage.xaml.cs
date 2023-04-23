@@ -18,6 +18,9 @@ public partial class NovaTransacaoPage : ContentPage
         InitializeComponent();
         BindingContext = Conta;
 
+        lblValorEmConta.Text = conta.ValorEmConta.ToString("c");
+        lblAgencia.Text = $"Agência: {conta.Agencia}";
+        lblNumero.Text = $"Número: {conta.Numero}";
     }
 
 

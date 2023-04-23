@@ -7,12 +7,12 @@
         <StackLayout BackgroundColor="#512BD4" Padding="20">
             <Label Text="Valor em conta:" TextColor="White" />
             <Label 
-                Text="{Binding ValorEmConta, StringFormat='{0:c}'}" 
+                x:Name="lblValorEmConta"
                 TextColor="White"
                 FontSize="30"
                 FontAttributes="Bold"/>
-            <Label TextColor="White" Text="{Binding Agencia, StringFormat='Agência: {0}'}" />
-            <Label TextColor="White" Text="{Binding Numero, StringFormat='Conta: {0}'}" />
+            <Label TextColor="White" x:Name="lblAgencia" />
+            <Label TextColor="White" x:Name="lblNumero" />
         </StackLayout>
 
         <StackLayout Padding="20">

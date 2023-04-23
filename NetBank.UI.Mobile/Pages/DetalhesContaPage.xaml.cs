@@ -64,7 +64,7 @@ public partial class DetalhesContaPage : ContentPage
 
     }
 
-
+    private async void listTransacoes_ItemTapped(object sender, ItemTappedEventArgs e)
     private async void btnNovaTransacao_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new NovaTransacaoPage(_conta));

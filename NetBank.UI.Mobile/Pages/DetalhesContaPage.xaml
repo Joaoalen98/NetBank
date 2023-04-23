@@ -40,7 +40,7 @@
 
                 <StackLayout Padding="20">
                     <Label Text="Seu Extrato:" FontSize="20" Padding="10" FontAttributes="Bold" />
-                    <ListView HasUnevenRows="True" SelectionMode="None" x:Name="listTransacoes">
+                    <ListView HasUnevenRows="True" ItemTapped="listTransacoes_ItemTapped" SelectionMode="None" x:Name="listTransacoes">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>

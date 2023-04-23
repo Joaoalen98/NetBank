@@ -37,7 +37,7 @@ namespace NetBank.Infra.Repos
         public async Task EnviarTransacao(
             string idContaEnviou, string agenciaContaReceber, string numeroContaReceber, decimal valor)
         {
-            var contaEnviou = await ObterPorId(idContaEnviou, false);
+            var contaEnviou = await ObterPorId(idContaEnviou, true);
 
             if (valor > contaEnviou.ValorEmConta)
             {

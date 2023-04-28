@@ -2,12 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:pages="clr-namespace:NetBank.UI.Mobile.Pages"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="NetBank.UI.Mobile.Pages.HomePage"
              Title="Home">
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource Primary}" />
+    </ContentPage.Behaviors>
     <ScrollView VerticalOptions="Fill">
         <StackLayout HorizontalOptions="Fill">
             <StackLayout
-                BackgroundColor="#512BD4"
+                BackgroundColor="{StaticResource Primary}"
                 Padding="20">
 
                 <Label 
@@ -40,7 +44,7 @@
                                         <Label 
                                             Text="{Binding ValorEmConta, StringFormat='{0:c}'}" 
                                             HorizontalOptions="EndAndExpand"
-                                            TextColor="#512BD4"
+                                            TextColor="{StaticResource Secondary}"
                                             FontAttributes="Bold"/>
                                     </FlexLayout>
                                     <Label Text="{Binding Agencia, StringFormat='Agência: {0}'}" />

@@ -4,7 +4,7 @@
              x:Class="NetBank.UI.Mobile.Pages.NovaTransacaoPage"
              Title="Nova Transacao">
     <VerticalStackLayout>
-        <StackLayout BackgroundColor="#512BD4" Padding="20">
+        <StackLayout BackgroundColor="{StaticResource Primary}" Padding="20">
             <Label Text="Valor em conta:" TextColor="White" />
             <Label 
                 x:Name="lblValorEmConta"
